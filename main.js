@@ -43,3 +43,20 @@ for (let i = 0; i < 5; i += 1) {
 }
 
 document.getElementById('container').appendChild(svgCanvas);
+
+function fillShapes(params) {
+  $('circle, rect').addClass('fill');
+}
+$('#fill-shapes').on('click', fillShapes);
+
+
+function clearShapes(params) {
+  $('circle, rect').removeClass('fill');
+}
+$('#clear-shapes').on('click', clearShapes);
+
+document.addEventListener('click', (el) => {
+  if (el.target.nodeName === 'circle') {
+    $(el.target).toggleClass('fill');
+  }
+}, true);
