@@ -1,8 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-multi-spaces */
-
-// CONTAINER SVG
-const svgNs = 'http://www.w3.org/2000/svg';
+// SVG CONTAINER
+const svgNs     = 'http://www.w3.org/2000/svg';
 const svgCanvas = document.createElementNS(svgNs, 'svg');
 svgCanvas.setAttribute('viewBox', '0 0 100 100');
 
@@ -22,8 +19,10 @@ for (let i = 0; i < 5; i += 1) {
       rectangle.setAttribute('stroke', '#33FF21');
       rectangle.setAttribute('fill', 'white');
       rectangle.setAttribute('id', `${i}${j}`);
+      rectangle.setAttribute('class', 'rectangle');
       if (i === 2 && j === 2) {
         rectangle.setAttribute('transform', 'rotate(-45 48 48)');
+        rectangle.setAttribute('class', 'diamond');
       }
       svgCanvas.appendChild(rectangle);
     } else {
@@ -44,19 +43,35 @@ for (let i = 0; i < 5; i += 1) {
 
 document.getElementById('container').appendChild(svgCanvas);
 
-function fillShapes(params) {
-  $('circle, rect').addClass('fill');
-}
+function fillShapes() { $('circle, rect').addClass('fill'); }
 $('#fill-shapes').on('click', fillShapes);
 
 
-function clearShapes(params) {
-  $('circle, rect').removeClass('fill');
-}
+function clearShapes() { $('circle, rect').removeClass('fill'); }
 $('#clear-shapes').on('click', clearShapes);
 
 document.addEventListener('click', (el) => {
-  if (el.target.nodeName === 'circle') {
-    $(el.target).toggleClass('fill');
+  const currentRowId   = `circle[id^="${el.target.id[0]}"]`;
+  const currentColId   = `circle[id$="${el.target.id[1]}"]`;
+  const targetIsFilled = el.target.classList[1] === 'fill';
+
+  $(el.target).toggleClass('fill');
+
+  if (el.target.classList[0] === 'rectangle') {
+    if (targetIsFilled) {
+      $(currentRowId).removeClass('fill');
+    } else {
+      $(currentRowId).addClass('fill');
+    }
+  }
+
+  if (el.target.classList[0] === 'diamond') {
+    if (targetIsFilled) {
+      $(currentRowId).removeClass('fill');
+      $(currentColId).removeClass('fill');
+    } else {
+      $(currentRowId).addClass('fill');
+      $(currentColId).addClass('fill');
+    }
   }
 }, true);
