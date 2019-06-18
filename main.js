@@ -20,7 +20,7 @@ for (let i = 0; i < 5; i += 1) {
       rectangle.setAttribute('width', shapesWidth);
       rectangle.setAttribute('height', shapesWidth);
       rectangle.setAttribute('stroke', '#33FF21');
-      rectangle.setAttribute('fill', 'none');
+      rectangle.setAttribute('fill', 'white');
       rectangle.setAttribute('id', `${i}${j}`);
       if (i === 2 && j === 2) {
         rectangle.setAttribute('transform', 'rotate(-45 48 48)');
@@ -32,7 +32,7 @@ for (let i = 0; i < 5; i += 1) {
       circle.setAttribute('cy', yRows);
       circle.setAttribute('r', shapesWidth / 2);
       circle.setAttribute('stroke', 'blue');
-      circle.setAttribute('fill', 'none');
+      circle.setAttribute('fill', 'white');
       circle.setAttribute('id', `${i}${j}`);
       svgCanvas.appendChild(circle);
     }
