@@ -5,6 +5,7 @@ const smbTheme           = new Audio('./assets/audio/smb1.mp3');
 const smbThemeUnder      = new Audio('./assets/audio/smb1_under.mp3');
       smbThemeUnder.loop = true;
 const shapeClear         = new Audio('./assets/audio/smb3_pipe.wav');
+const congratulations    = new Audio('./assets/audio/smb3_airship_clear.wav');
 
 // SVG CONTAINER
 const svgNs       = 'http://www.w3.org/2000/svg';
@@ -54,29 +55,43 @@ for (let i = 0; i < 5; i += 1) {
 document.getElementById('container').appendChild(svgViewbox);
 
 const allShapes = $('circle, rect');
+const hereWeGoLavender = 'rgb(183, 165, 251)';
+const mammaMiaRed      = 'rgb(254, 100, 73)';
 
 // If Game is won, turn off the MUSIC + GREET
 function gameEnded(click) {
-  for (let i = 0; i < allShapes.length; i += 1) {
-    if ([...allShapes[i].classList].includes('fill')) {
-      return ''; // break function execution
+  const bodyBgColor = $('body').css('background-color');
+
+  if (bodyBgColor === hereWeGoLavender) {
+    for (let i = 0; i < allShapes.length; i += 1) {
+      if ([...allShapes[i].classList].includes('fill')) {
+        return;
+      }
     }
-  }
 
-  if (click.target.nodeName !== 'svg') {
-    // Stop and Rewind all background sounds
-    smbThemeUnder.load();
-    smbTheme.load();
+    if (click.target.nodeName !== 'svg') {
+      // Stop and Rewind all background sounds
+      smbThemeUnder.load();
+      smbTheme.load();
 
-    $('body').css({
-      'animation-play-state': 'paused',
-      'background-color': 'yellow',
-    });
-    // WIN SOUND
-    new Audio('./assets/audio/smb3_airship_clear.wav').play();
-    confetti.start(6000);
-    console.log('you won');
-    return 'game is won';
+      $('body').css({
+        'animation-play-state': 'paused',
+        'background-color': 'yellow',
+      });
+
+      congratulations.play();
+      confetti.start(6000);
+      return;
+    }
+  } else { //
+    const allFilled = [...allShapes].every(el => [...el.classList].includes('fill'));
+    if (allFilled) {
+      smbThemeUnder.load();
+      smbTheme.load();
+      $('body').css('background-color', 'yellow');
+      congratulations.play();
+      confetti.start(6000);
+    }
   }
 }
 
@@ -128,7 +143,7 @@ function fillShapes() {
   $('circle, rect').removeClass('bounce-coin');
   $('body').css({
     'animation-play-state': 'running',
-    'background-color': '#B7A5FB',
+    'background-color': 'rgb(183, 165, 251)',
   });
 
   smbThemeUnder.load();
@@ -136,12 +151,13 @@ function fillShapes() {
 }
 $('#fill-shapes').on('click', fillShapes);
 
+
 function clearShapes() {
   $('circle, rect').removeClass('fill');
   $('circle, rect').removeClass('bounce-coin');
   $('body').css({
     'animation-play-state': 'paused',
-    'background-color': 'tomato',
+    'background-color': 'rgb(255, 99, 71)',
   });
 
   shapeClear.play();
