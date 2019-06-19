@@ -54,22 +54,30 @@ for (let i = 0; i < 5; i += 1) {
 document.getElementById('container').appendChild(svgViewbox);
 
 const allShapes = $('circle, rect');
+
 // If Game is won, turn off the MUSIC + GREET
-function gameIsWon() {
+function gameEnded(click) {
   for (let i = 0; i < allShapes.length; i += 1) {
     if ([...allShapes[i].classList].includes('fill')) {
-      return 'more filled shapes to go';
-    };
+      return ''; // break function execution
+    }
   }
 
-  // Stop and Rewind all background sounds
-  smbThemeUnder.load();
-  smbTheme.load();
+  if (click.target.nodeName !== 'svg') {
+    // Stop and Rewind all background sounds
+    smbThemeUnder.load();
+    smbTheme.load();
 
-  new Audio('./assets/audio/smb3_airship_clear.wav').play();
-  confetti.start(6000);
-  console.log('you won');
-  return 'game is won';
+    $('body').css({
+      'animation-play-state': 'paused',
+      'background-color': 'yellow',
+    });
+    // WIN SOUND
+    new Audio('./assets/audio/smb3_airship_clear.wav').play();
+    confetti.start(6000);
+    console.log('you won');
+    return 'game is won';
+  }
 }
 
 // ADD EVENT DELEGATION LOGIC FOR CLICK LISTENING
@@ -103,7 +111,7 @@ document.getElementById('container').addEventListener('click', (el) => {
 
   if (shape.classList[0] === 'diamond') {
     if (targetIsFilled) {
-      new Audio('./assets/audio/smb3_break_brick_block.wav').play();
+      new Audio('./assets/audio/smb3_thwomp.wav').play();
       $(`${currentColId}, ${currentRowId}`).removeClass('fill');
     } else {
       new Audio('./assets/audio/smb3_power-up.wav').play();
@@ -111,7 +119,7 @@ document.getElementById('container').addEventListener('click', (el) => {
     }
   }
 
-  gameIsWon();
+  gameEnded(el);
 }, true);
 
 // BUTTON LOGIC
@@ -137,7 +145,7 @@ function clearShapes() {
   });
 
   shapeClear.play();
-  smbTheme.load(); // pause & rewinds main theme
+  smbTheme.load(); // pause & rewind main theme
   smbThemeUnder.play();
 }
 $('#clear-shapes').on('click', clearShapes);
