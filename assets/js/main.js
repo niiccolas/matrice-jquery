@@ -1,3 +1,4 @@
+
 // AUDIO
 const smbTheme           = new Audio('./assets/audio/smb1.mp3');
       smbTheme.loop      = true;
@@ -52,8 +53,28 @@ for (let i = 0; i < 5; i += 1) {
 // ADD POPULATED VIEWBOX TO DOM
 document.getElementById('container').appendChild(svgViewbox);
 
+const allShapes = $('circle, rect');
+// If Game is won, turn off the MUSIC + GREET
+function gameIsWon() {
+  for (let i = 0; i < allShapes.length; i += 1) {
+    if ([...allShapes[i].classList].includes('fill')) {
+      return 'more filled shapes to go';
+    };
+  }
+
+  // Stop and Rewind all background sounds
+  smbThemeUnder.load();
+  smbTheme.load();
+
+  new Audio('./assets/audio/smb3_airship_clear.wav').play();
+  confetti.start(6000);
+  console.log('you won');
+  return 'game is won';
+}
+
 // ADD EVENT DELEGATION LOGIC FOR CLICK LISTENING
 document.getElementById('container').addEventListener('click', (el) => {
+
   const shape = el.target;
   const currentRowId   = `circle[id^="${shape.id[0]}"]`;
   const currentColId   = `circle[id$="${shape.id[1]}"]`;
@@ -89,6 +110,8 @@ document.getElementById('container').addEventListener('click', (el) => {
       $(`${currentColId}, ${currentRowId}`).addClass('fill');
     }
   }
+
+  gameIsWon();
 }, true);
 
 // BUTTON LOGIC
