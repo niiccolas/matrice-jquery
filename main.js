@@ -1,13 +1,20 @@
-// SVG CONTAINER
-const svgNs     = 'http://www.w3.org/2000/svg';
-const svgCanvas = document.createElementNS(svgNs, 'svg');
-svgCanvas.setAttribute('viewBox', '0 0 100 100');
+// AUDIO
+const smbTheme           = new Audio('./assets/audio/smb1.mp3');
+      smbTheme.loop      = true;
+const smbThemeUnder      = new Audio('./assets/audio/smb1_under.mp3');
+      smbThemeUnder.loop = true;
+const shapeClear         = new Audio('./assets/audio/smb3_pipe.wav');
 
+// SVG CONTAINER
+const svgNs       = 'http://www.w3.org/2000/svg';
 const shapesWidth = 10;
 const xColsOrigin = 18;
 let   xCols       = 18;
 let   yRows       = 18;
+const svgViewbox  = document.createElementNS(svgNs, 'svg');
+      svgViewbox.setAttribute('viewBox', '0 0 100 100');
 
+// POPULATE VIEWBOX WITH SVG SHAPES
 for (let i = 0; i < 5; i += 1) {
   for (let j = 0; j < 5; j += 1) {
     if (i === j) {
@@ -16,24 +23,25 @@ for (let i = 0; i < 5; i += 1) {
       rectangle.setAttribute('y', yRows - 5);
       rectangle.setAttribute('width', shapesWidth);
       rectangle.setAttribute('height', shapesWidth);
-      rectangle.setAttribute('stroke', '#33FF21');
-      rectangle.setAttribute('fill', 'white');
+      rectangle.setAttribute('stroke', 'blue');
+      rectangle.setAttribute('rx', 0.2);
+      rectangle.setAttribute('fill', 'transparent');
       rectangle.setAttribute('id', `${i}${j}`);
       rectangle.setAttribute('class', 'rectangle');
       if (i === 2 && j === 2) {
         rectangle.setAttribute('transform', 'rotate(-45 48 48)');
         rectangle.setAttribute('class', 'diamond');
       }
-      svgCanvas.appendChild(rectangle);
+      svgViewbox.appendChild(rectangle);
     } else {
       const circle = document.createElementNS(svgNs, 'circle');
       circle.setAttribute('cx', xCols);
       circle.setAttribute('cy', yRows);
       circle.setAttribute('r', shapesWidth / 2);
-      circle.setAttribute('stroke', 'blue');
-      circle.setAttribute('fill', 'white');
+      circle.setAttribute('stroke', 'rgb(255, 204, 0)');
+      circle.setAttribute('fill', 'transparent');
       circle.setAttribute('id', `${i}${j}`);
-      svgCanvas.appendChild(circle);
+      svgViewbox.appendChild(circle);
     }
     xCols += 15;
   }
@@ -41,37 +49,72 @@ for (let i = 0; i < 5; i += 1) {
   yRows += 15;
 }
 
-document.getElementById('container').appendChild(svgCanvas);
+// ADD POPULATED VIEWBOX TO DOM
+document.getElementById('container').appendChild(svgViewbox);
 
-function fillShapes() { $('circle, rect').addClass('fill'); }
-$('#fill-shapes').on('click', fillShapes);
+// ADD EVENT DELEGATION LOGIC FOR CLICK LISTENING
+document.getElementById('container').addEventListener('click', (el) => {
+  const shape = el.target;
+  const currentRowId   = `circle[id^="${shape.id[0]}"]`;
+  const currentColId   = `circle[id$="${shape.id[1]}"]`;
+  const targetIsFilled = shape.classList[1] === 'fill';
+  $(shape).removeClass('bounce-coin');
+  $(currentRowId).removeClass('bounce-coin');
+  $(currentColId).removeClass('bounce-coin');
 
+  if (shape.nodeName === 'circle' && shape.classList.contains('fill')) {
+    $(shape).addClass('bounce-coin');
+    new Audio('./assets/audio/smb3_coin.wav').play();
+  } else if (shape.nodeName === 'circle') {
+    new Audio('./assets/audio/smb3_kick.wav').play();
+  }
+  $(shape).toggleClass('fill');
 
-function clearShapes() { $('circle, rect').removeClass('fill'); }
-$('#clear-shapes').on('click', clearShapes);
-
-document.addEventListener('click', (el) => {
-  const currentRowId   = `circle[id^="${el.target.id[0]}"]`;
-  const currentColId   = `circle[id$="${el.target.id[1]}"]`;
-  const targetIsFilled = el.target.classList[1] === 'fill';
-
-  $(el.target).toggleClass('fill');
-
-  if (el.target.classList[0] === 'rectangle') {
+  if (shape.classList[0] === 'rectangle') {
     if (targetIsFilled) {
       $(currentRowId).removeClass('fill');
+      new Audio('./assets/audio/smb3_break_brick_block.wav').play();
     } else {
+      new Audio('./assets/audio/smb3_frog_mario_walk.wav').play();
       $(currentRowId).addClass('fill');
     }
   }
 
-  if (el.target.classList[0] === 'diamond') {
+  if (shape.classList[0] === 'diamond') {
     if (targetIsFilled) {
-      $(currentRowId).removeClass('fill');
-      $(currentColId).removeClass('fill');
+      new Audio('./assets/audio/smb3_break_brick_block.wav').play();
+      $(`${currentColId}, ${currentRowId}`).removeClass('fill');
     } else {
-      $(currentRowId).addClass('fill');
-      $(currentColId).addClass('fill');
+      new Audio('./assets/audio/smb3_power-up.wav').play();
+      $(`${currentColId}, ${currentRowId}`).addClass('fill');
     }
   }
 }, true);
+
+// BUTTON LOGIC
+function fillShapes() {
+  $('circle, rect').addClass('fill');
+  $('circle, rect').removeClass('bounce-coin');
+  $('body').css({
+    'animation-play-state': 'running',
+    'background-color': '#B7A5FB',
+  });
+
+  smbThemeUnder.load();
+  smbTheme.play();
+}
+$('#fill-shapes').on('click', fillShapes);
+
+function clearShapes() {
+  $('circle, rect').removeClass('fill');
+  $('circle, rect').removeClass('bounce-coin');
+  $('body').css({
+    'animation-play-state': 'paused',
+    'background-color': 'tomato',
+  });
+
+  shapeClear.play();
+  smbTheme.load(); // pause & rewinds main theme
+  smbThemeUnder.play();
+}
+$('#clear-shapes').on('click', clearShapes);
