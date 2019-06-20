@@ -142,9 +142,8 @@ document.getElementById('container').addEventListener('click', (el) => {
 
 // BUTTON LOGIC
 function fillShapes() {
-  modal.style.display = "block";
-  modalClear.style.display = "block"
-
+  modal.style.display      = 'block';
+  modalClear.style.display = 'block';
 
   $('circle, rect').addClass('fill');
   $('circle, rect').removeClass('bounce-coin');
@@ -161,14 +160,13 @@ $('#btn-fill-shapes').on('click', fillShapes);
 
 
 function clearShapes() {
-  modal.style.display = "block";
-  modalFill.style.display = "block";
+  modal.style.display     = 'block';
+  modalFill.style.display = 'block';
 
   $('circle, rect').removeClass('fill');
   $('circle, rect').removeClass('bounce-coin');
   $('body').css({
     'animation-play-state': 'running',
-    // 'animation': 'sprites-fast 200s infinite linear',
     'animation-duration': '200s',
     'background-color': 'rgb(255, 99, 71)',
   });
@@ -180,15 +178,13 @@ function clearShapes() {
 $('#btn-clear-shapes').on('click', clearShapes);
 
 // MODAL Logic
-let modal      = document.getElementById("myModal");
+let modal      = document.getElementById('myModal');
 let modalFill  = document.getElementById('modal-fill');
 let modalClear = document.getElementById('modal-clear');
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display      = "none";
-    modalFill.style.display  = "none";
-    modalClear.style.display = "none";
-  }
-};
+$('.btn-modal').on('click', () => {
+  new Audio('./assets/audio/smb3_inventory_open_close.wav').play();
+  modal.style.display      = 'none';
+  modalFill.style.display  = 'none';
+  modalClear.style.display = 'none';
+});
