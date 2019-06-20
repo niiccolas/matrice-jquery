@@ -82,7 +82,8 @@ footer {
 */
 
 button {
-  display: inline-block;
+  /* display: inline-block; */
+  display: block;
   width: 250px;
   padding: 5px 15px;
   margin: 0 auto;
@@ -148,7 +149,7 @@ button:active {
 
 svg {
   width: 100vw;
-  height: 60vh;
+  height: 70vh;
 }
 
 circle, rect {
@@ -170,13 +171,13 @@ circle:hover, rect:hover {
 
 */
 
-@media only screen and (min-width: 490px) {
+@media only screen and (min-width: 516px) {
   svg {
     height: 70vh;
   }
 
   button {
-    display: inline;
+    display: inline-block;
   }
 
   #btn-fill-shapes {
