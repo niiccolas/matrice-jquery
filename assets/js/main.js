@@ -83,7 +83,7 @@ function gameEnded(click) {
       confetti.start(6000);
       return;
     }
-  } else { //
+  } else {
     const allFilled = [...allShapes].every(el => [...el.classList].includes('fill'));
     if (allFilled) {
       smbThemeUnder.load();
