@@ -149,7 +149,7 @@ function fillShapes() {
   smbThemeUnder.load();
   smbTheme.play();
 }
-$('#fill-shapes').on('click', fillShapes);
+$('#btn-fill-shapes').on('click', fillShapes);
 
 
 function clearShapes() {
@@ -164,4 +164,4 @@ function clearShapes() {
   smbTheme.load(); // pause & rewind main theme
   smbThemeUnder.play();
 }
-$('#clear-shapes').on('click', clearShapes);
+$('#btn-clear-shapes').on('click', clearShapes);
