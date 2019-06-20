@@ -41,6 +41,7 @@ body {
   background-color: #B7A5FB;
   background-repeat: repeat-x,
                      repeat-x;
+  /* background-position: left 0px bottom 0px,
                        left 0px bottom 24px; */
   animation: sprites-fast 15s infinite linear;
   animation-play-state: paused;
@@ -252,22 +253,5 @@ circle:hover, rect:hover {
   100% {
     background-position: left -1904px bottom 0px,
                          left -1016px bottom 24px;
-  }
-}
-
-@keyframes sprites-slow {
-  0% {
-    background-position: left 0px bottom 0px,
-                         left 0px bottom 24px;
-  }
-  50% {
-    /* ground SLOW acceleration factor: 1 */
-    /* bushes SLOW acceleration factor: 1/4 */
-    background-position: left -68px bottom 00px,
-                         left -34px bottom 24px;
-  }
-  100% {
-    background-position: left -136px bottom 0px,
-                         left -68px bottom 24px;
   }
 }

@@ -88,7 +88,10 @@ function gameEnded(click) {
     if (allFilled) {
       smbThemeUnder.load();
       smbTheme.load();
-      $('body').css('background-color', 'yellow');
+      $('body').css({
+        'background-color': 'yellow',
+        'animation-play-state': 'paused',
+      });
       congratulations.play();
       confetti.start(6000);
     }
@@ -142,6 +145,7 @@ function fillShapes() {
   $('circle, rect').addClass('fill');
   $('circle, rect').removeClass('bounce-coin');
   $('body').css({
+    'animation': 'sprites-fast 15s infinite linear',
     'animation-play-state': 'running',
     'background-color': 'rgb(183, 165, 251)',
   });
@@ -156,7 +160,9 @@ function clearShapes() {
   $('circle, rect').removeClass('fill');
   $('circle, rect').removeClass('bounce-coin');
   $('body').css({
-    'animation-play-state': 'paused',
+    'animation-play-state': 'running',
+    // 'animation': 'sprites-fast 200s infinite linear',
+    'animation-duration': '200s',
     'background-color': 'rgb(255, 99, 71)',
   });
 
