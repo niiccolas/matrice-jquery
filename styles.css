@@ -34,6 +34,7 @@
 }
 
 body {
+  font-family: Avenir, Helvetica, sans-serif;
   height: 100vh;
   /* setting up the background sprites */
   background-image: url("./assets/img/sprites/ground.png"),
@@ -254,4 +255,48 @@ circle:hover, rect:hover {
     background-position: left -1904px bottom 0px,
                          left -1016px bottom 24px;
   }
+}
+
+/*
+
+   __  __           _       _
+  |  \/  | ___   __| | __ _| |
+  | |\/| |/ _ \ / _` |/ _` | |
+  | |  | | (_) | (_| | (_| | |
+  |_|  |_|\___/ \__,_|\__,_|_|
+
+
+*/
+
+ .modal-background {
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: italic;
+  font-weight: 100;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(3, 14, 135, 0.2);
+  background-color: blue;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 40px;
+  width: 80%; /* Could be more or less, depending on screen size */
+  font-size: 3rem;
+}
+
+#modal-fill, #modal-clear {
+  display: none;
 }

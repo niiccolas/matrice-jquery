@@ -142,6 +142,10 @@ document.getElementById('container').addEventListener('click', (el) => {
 
 // BUTTON LOGIC
 function fillShapes() {
+  modal.style.display = "block";
+  modalClear.style.display = "block"
+
+
   $('circle, rect').addClass('fill');
   $('circle, rect').removeClass('bounce-coin');
   $('body').css({
@@ -157,6 +161,9 @@ $('#btn-fill-shapes').on('click', fillShapes);
 
 
 function clearShapes() {
+  modal.style.display = "block";
+  modalFill.style.display = "block";
+
   $('circle, rect').removeClass('fill');
   $('circle, rect').removeClass('bounce-coin');
   $('body').css({
@@ -171,3 +178,17 @@ function clearShapes() {
   smbThemeUnder.play();
 }
 $('#btn-clear-shapes').on('click', clearShapes);
+
+// MODAL Logic
+let modal      = document.getElementById("myModal");
+let modalFill  = document.getElementById('modal-fill');
+let modalClear = document.getElementById('modal-clear');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display      = "none";
+    modalFill.style.display  = "none";
+    modalClear.style.display = "none";
+  }
+};
