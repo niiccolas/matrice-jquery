@@ -1,0 +1,257 @@
+/*
+
+   _____           _
+  |  ___|__  _ __ | |_ ___
+  | |_ / _ \| '_ \| __/ __|
+  |  _| (_) | | | | |_\__ \
+  |_|  \___/|_| |_|\__|___/
+
+
+*/
+
+@font-face {
+  font-family: Avenir;
+  src: url('./assets/fonts/Avenir-Heavy.ttf') format('truetype'),
+       url('./assets/fonts/Avenir-Heavy..woff') format('woff');
+  font-weight: 700;
+}
+
+/*
+
+   __  __       _          ____            _        _
+  |  \/  | __ _(_)_ __    / ___|___  _ __ | |_ __ _(_)_ __   ___ _ __ ___
+  | |\/| |/ _` | | '_ \  | |   / _ \| '_ \| __/ _` | | '_ \ / _ \ '__/ __|
+  | |  | | (_| | | | | | | |__| (_) | | | | || (_| | | | | |  __/ |  \__ \
+  |_|  |_|\__,_|_|_| |_|  \____\___/|_| |_|\__\__,_|_|_| |_|\___|_|  |___/
+
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  /* setting up the background sprites */
+  background-image: url("./assets/img/sprites/ground.png"),
+                    url("./assets/img/sprites/bushes.png");
+  background-color: #B7A5FB;
+  background-repeat: repeat-x,
+                     repeat-x;
+  /* background-position: left 0px bottom 0px,
+                       left 0px bottom 24px; */
+  animation: sprites-fast 15s infinite linear;
+  transition: .8s background-color ease;
+  animation-play-state: paused;
+}
+
+footer {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/*
+
+   _   _ ___
+  | | | |_ _|
+  | | | || |
+  | |_| || |
+   \___/|___|
+
+
+*/
+
+button {
+  display: inline-block;
+  width: 250px;
+  padding: 5px 15px;
+  margin: 0 auto;
+  border: 6px solid blue;
+  border-radius: 10px;
+
+  font-size: 1.5rem;
+  color: blue;
+  background: white;
+  font-family: Avenir, Helvetica, sans-serif;
+  font-weight: 700;
+  transform: scale(1);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  transition: transform .2s ease-in-out,
+              background .2s ease-in-out;
+}
+
+button:focus {
+  outline:0;
+}
+
+button:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+  color: blue;
+}
+
+button:active {
+  transform: scale(1);
+  transition: all .001s ease-in-out;
+}
+
+#btn-btn-fill-shapes {
+  transform-origin: bottom;
+  margin-bottom: 5px;
+}
+
+#btn-btn-clear-shapes {
+  transform-origin: top;
+}
+
+#btn-btn-fill-shapes:hover  { background: #33FF21; }
+#btn-btn-fill-shapes:active { background: rgb(183, 255, 178); }
+
+#btn-btn-clear-shapes:hover  { background: rgb(255, 36, 36); }
+#btn-btn-clear-shapes:active { background: rgb(252, 92, 92); }
+
+/*
+
+   ______     ______   ____  _
+  / ___\ \   / / ___| / ___|| |__   __ _ _ __   ___  ___
+  \___ \\ \ / / |  _  \___ \| '_ \ / _` | '_ \ / _ \/ __|
+   ___) |\ V /| |_| |  ___) | | | | (_| | |_) |  __/\__ \
+  |____/  \_/  \____| |____/|_| |_|\__,_| .__/ \___||___/
+                                        |_|
+
+*/
+
+.fill {
+  fill: #FFEE2E;
+}
+
+svg {
+  width: 100vw;
+  height: 60vh;
+}
+
+circle, rect {
+  transition: all .1s ease-in-out;
+}
+
+circle:hover, rect:hover {
+  cursor: pointer;
+}
+
+/*
+
+   ____            _    _
+  |  _ \  ___  ___| | _| |_ ___  _ __
+  | | | |/ _ \/ __| |/ / __/ _ \| '_ \
+  | |_| |  __/\__ \   <| || (_) | |_) |
+  |____/ \___||___/_|\_\\__\___/| .__/
+                                |_|
+
+*/
+
+@media only screen and (min-width: 490px) {
+  svg {
+    height: 70vh;
+  }
+
+  button {
+    display: inline;
+  }
+
+  #btn-btn-fill-shapes {
+    margin-right: 10px;
+    transform-origin: right;
+  }
+
+  #btn-btn-clear-shapes {
+    transform-origin: left;
+  }
+}
+
+/*
+
+      _          _                 _   _
+     / \   _ __ (_)_ __ ___   __ _| |_(_) ___  _ __  ___
+    / _ \ | '_ \| | '_ ` _ \ / _` | __| |/ _ \| '_ \/ __|
+   / ___ \| | | | | | | | | | (_| | |_| | (_) | | | \__ \
+  /_/   \_\_| |_|_|_| |_| |_|\__,_|\__|_|\___/|_| |_|___/
+
+*/
+
+.bounce-coin {
+  animation: bounce-coin 0.7s both;
+}
+
+@keyframes bounce-coin {
+  0% {
+    -webkit-transform: translateY(-10px);
+            transform: translateY(-10px);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+    opacity: 1;
+  }
+  24% {
+    opacity: 1;
+  }
+  40% {
+    -webkit-transform: translateY(-9px);
+            transform: translateY(-9px);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  65% {
+    -webkit-transform: translateY(-7px);
+            transform: translateY(-7px);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  82% {
+    -webkit-transform: translateY(-4px);
+            transform: translateY(-4px);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  93% {
+    -webkit-transform: translateY(-2px);
+            transform: translateY(-2px);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  25%,
+  55%,
+  75%,
+  87% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+    opacity: 1;
+  }
+}
+
+@keyframes sprites-fast {
+  0% {
+    background-position: left 0px bottom 0px,
+                         left 0px bottom 24px;
+  }
+  50% {
+    /* ground acceleration factor: 14 */
+    /* bushes acceleration factor: 1 */
+    background-position: left -952px bottom 00px,
+                         left -508px bottom 24px;
+  }
+  100% {
+    background-position: left -1904px bottom 0px,
+                         left -1016px bottom 24px;
+  }
+}
